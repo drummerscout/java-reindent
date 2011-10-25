@@ -1,1 +1,6 @@
+# generated class files directory for Apache Buildr
 /target
+
+# generated Eclipse project files
+.classpath
+.project
