@@ -44,6 +44,11 @@ public class Reindent
 			e.printStackTrace();
 			System.exit(1);
 		}
+		finally
+		{
+			if(inScanner != null)
+				inScanner.close();
+		}
 		
 		// Read file line by line
 		String line;
