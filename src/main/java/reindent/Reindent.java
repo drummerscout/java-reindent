@@ -28,21 +28,26 @@ public class Reindent
 			System.exit(1);
 		}
 
-		// Input file checking
-		File inFile = new File(args[0]);
-		if(!inFile.isFile() || !inFile.canRead() || inFile.length() <= 0)
-		{
-			System.err.println("reindent: " + inFile.getName() + ": Must be a readable file with content");
-			System.exit(1);
-		}
-
 		// Setup input and output files
 		Scanner inScanner = null;
 		PrintStream outStream = null;
 
 		try
 		{
-			inScanner = new Scanner(inFile);
+
+			if(args[0].equals("-"))
+				inScanner = new Scanner(System.in);
+			else
+			{
+				// Input file checking
+				File inFile = new File(args[0]);
+				if(!inFile.isFile() || !inFile.canRead() || inFile.length() <= 0)
+				{
+					System.err.println("reindent: " + inFile.getName() + ": Must be a readable file with content");
+					System.exit(1);
+				}
+				inScanner = new Scanner(inFile);
+			}
 
 			if(args[1].equals("-"))
 				outStream = System.out;
