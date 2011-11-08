@@ -6,6 +6,7 @@ package reindent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 /**
@@ -49,11 +50,14 @@ public class Reindent
 			System.exit(1);
 		}
 
-		// Setup scanner
+		// Setup input and output files
 		Scanner inScanner = null;
+		PrintStream outStream = null;
+		
 		try
 		{
 			inScanner = new Scanner(inFile);
+			outStream = new PrintStream(outFile);
 			
 			// Read file line by line
 			String line;
@@ -68,17 +72,19 @@ public class Reindent
 				for(int i = 0; i < numTabs; ++i)
 					formattedLine += '\t';
 				formattedLine += line.substring(numSpaces);
-				System.out.println(formattedLine);
+				outStream.println(formattedLine);
 			}
 		}
 		catch(FileNotFoundException e)
 		{
-			throw new RuntimeException(e);			
+			throw new RuntimeException(e);
 		}
 		finally
 		{
 			if(inScanner != null)
 				inScanner.close();
+			if(outStream != null)
+				outStream.close();
 		}
 		
 	}
