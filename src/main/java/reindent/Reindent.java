@@ -5,6 +5,7 @@ package reindent;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -30,6 +31,21 @@ public class Reindent
 		if(!inFile.isFile() || !inFile.canRead() || inFile.length() <= 0)
 		{
 			System.err.println("reindent: " + inFile.getName() + ": Must be a readable file with content");
+			System.exit(1);
+		}
+		
+		File outFile = new File(args[1]);
+		try
+		{
+			outFile.createNewFile();
+		}
+		catch(IOException e)
+		{
+			throw new RuntimeException(e);
+		}
+		if(!outFile.canWrite())
+		{
+			System.err.println("reindent: " + outFile.getName() + ": Cannot write to file");
 			System.exit(1);
 		}
 
@@ -64,5 +80,6 @@ public class Reindent
 			if(inScanner != null)
 				inScanner.close();
 		}
+		
 	}
 }
