@@ -57,8 +57,7 @@ public class Reindent
 		}
 		catch(FileNotFoundException e)
 		{
-			e.printStackTrace();
-			System.exit(1);
+			throw new RuntimeException(e);			
 		}
 		finally
 		{
