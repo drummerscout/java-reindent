@@ -22,9 +22,13 @@ public class Reindent
 	{
 
 		// Argument checking
-		if(args.length != 2)
+		if(args.length != 2 || args[0].equals("-h") || args[0].equals("--help"))
 		{
-			System.err.println("Usage: java reindent.Reindent INFILE OUTFILE");
+			System.err.println(
+					"Usage: java reindent.Reindent INFILE OUTFILE\n" +
+					"\n" +
+					"Use `-' for INFILE to read from stdin.\n" +
+					"Use `-' for OUTFILE to write to stdout.\n");
 			System.exit(1);
 		}
 
