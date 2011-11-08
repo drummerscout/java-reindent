@@ -20,6 +20,7 @@ public class Reindent
 	 */
 	public static void main(String[] args)
 	{
+
 		// Argument checking
 		if(args.length != 2)
 		{
@@ -34,31 +35,36 @@ public class Reindent
 			System.err.println("reindent: " + inFile.getName() + ": Must be a readable file with content");
 			System.exit(1);
 		}
-		
-		File outFile = new File(args[1]);
-		try
-		{
-			outFile.createNewFile();
-		}
-		catch(IOException e)
-		{
-			throw new RuntimeException(e);
-		}
-		if(!outFile.canWrite())
-		{
-			System.err.println("reindent: " + outFile.getName() + ": Cannot write to file");
-			System.exit(1);
-		}
 
 		// Setup input and output files
 		Scanner inScanner = null;
 		PrintStream outStream = null;
-		
+
 		try
 		{
 			inScanner = new Scanner(inFile);
-			outStream = new PrintStream(outFile);
-			
+
+			if(args[1].equals("-"))
+				outStream = System.out;
+			else
+			{
+				File outFile = new File(args[1]);
+				try
+				{
+					outFile.createNewFile();
+				}
+				catch(IOException e)
+				{
+					throw new RuntimeException(e);
+				}
+				if(!outFile.canWrite())
+				{
+					System.err.println("reindent: " + outFile.getName() + ": Cannot write to file");
+					System.exit(1);
+				}
+				outStream = new PrintStream(outFile);
+			}
+
 			// Read file line by line
 			String line;
 			while(inScanner.hasNextLine())
@@ -86,6 +92,6 @@ public class Reindent
 			if(outStream != null)
 				outStream.close();
 		}
-		
+
 	}
 }
